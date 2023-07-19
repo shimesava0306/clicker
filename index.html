@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>clicker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <aside>
+    <div class="menu">
+      <h1>CLICKER</h1>
+      <p>クリックして億万長者？</p>
+
+      <ul>
+        <button id="double"><li>30秒クリック2倍</li></button>
+        <button id ="auto"><li>自動クリック</li></button>
+        <button id="granpa"><li>毎秒金くれるジジイ</li></button>
+        <button id=""><li>test</li></button>
+        <button id=""><li>test</li></button>
+      </ul>
+
+      <p class="nowEvent"></p>
+    </aside>
+    </div>
+    <main>
+      <div class="container">
+        <div class="counterSection">
+        <p>累計金額</p>
+        <div class="counter">
+            <h1 id="count">0</h1>
+            <h2>円</h2>
+        </div>
+        <p>クリック金額：<span>10</span>円</p>
+        </div>
+
+
+        <div class="clickSection">
+          <div>
+            <button id="btn"><img src="img/money.png" alt="" /></button>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <aside>
+<div class="cardinner">
+          <h1>実績</h1>
+          <div class="card">
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+    
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+    
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+    
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+    
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+            <a href="#">
+            <div class="cardinfo">
+                  <img src="" alt="" />
+            </div>
+            </a>
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+            <a href="#">
+            <div class="cardinfo">
+                <img src="" alt="" />
+            </div>
+            </a>
+          </div>
+</div>
+    </aside>
+
+    <script>
+    let i = 0;
+    let c = 10;
+    let count = document.getElementById("count");
+    let countNow = document.querySelector("span");
+    let nowEvent = document.querySelector(".nowEvent");
+
+    document.getElementById("btn").addEventListener("click", (e) => {
+    i += c;
+    document.querySelector(".container h1").textContent = i;
+    });
+
+
+    document.getElementById("auto").addEventListener("click", (e) => {
+    i -= 50;
+    document.querySelector(".container h1").textContent = i;
+    const auto = setInterval(()=>{
+        i += c;
+        document.querySelector(".container h1").textContent = i;
+    },1000);
+    });
+    
+
+    document.getElementById("double").addEventListener("click", (e) => {
+            i -= 200;
+            c *= 2;
+            document.querySelector(".container h1").textContent = i;
+            countNow.textContent = c;
+            
+            setTimeout(()=>{
+            c = 10;
+            countNow.textContent = c;
+            }, 30000);
+        });
+
+    document.getElementById("granpa").addEventListener("click", (e) => {
+        i -= 500;
+        document.querySelector(".container h1").textContent = i;
+        c *= 5;
+        countNow.textContent = c;
+    });
+    </script>
+  </body>
+</html>

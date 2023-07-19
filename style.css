@@ -1,0 +1,75 @@
+.menu button {
+  width: 100%;
+  color: #000000;
+}
+
+button:hover {
+  filter: brightness(0.5);
+}
+
+body {
+  display: flex;
+}
+aside {
+  height: 100vh;
+  width: 15%;
+  background: #e0f0ff;
+  text-align: center;
+  border-right: 3px #c4e2ff solid;
+}
+main {
+  width: 70%;
+  text-align: center;
+}
+
+.counterSection {
+  height: 10rem;
+  background: #c4e2ff;
+}
+
+.counter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+h2 {
+  font-size: 2rem;
+  margin-left: 2rem;
+}
+li {
+  padding-block: 1rem;
+  background: #2292fa;
+  color: #ffffff;
+  margin-block: 1rem;
+  margin-right: 2rem;
+  box-shadow: 2px 2px 2px #777777;
+}
+
+h1 {
+  font-size: 3rem;
+  text-shadow: 2px 2px 2px #33333333;
+}
+p {
+  margin-bottom: 3rem;
+}
+
+.card {
+  width: 100%;
+  margin: 2rem auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 5px;
+}
+
+.cardinfo {
+  background: #777777;
+  height: 75px;
+  width: 75px;
+}
+
+.cardinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
