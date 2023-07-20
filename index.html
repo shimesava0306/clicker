@@ -10,141 +10,197 @@
     />
     <link rel="stylesheet" href="style.css" />
   </head>
+
   <body>
     <aside>
-    <div class="menu">
-      <h1>CLICKER</h1>
-      <p>クリックして億万長者？</p>
+      <div class="menu">
+        <div class="menuTitle">
+          <h1>CLICKER</h1>
+          <p>クリックして億万長者？</p>
+        </div>
 
-      <ul>
-        <button id="double"><li>30秒クリック2倍</li></button>
-        <button id ="auto"><li>自動クリック</li></button>
-        <button id="granpa"><li>毎秒金くれるジジイ</li></button>
-        <button id=""><li>test</li></button>
-        <button id=""><li>test</li></button>
-      </ul>
-
-      <p class="nowEvent"></p>
+        <ul>
+          <button id="double"><li class="double">30秒クリック2倍</li></button>
+          <button id="auto"><li class="auto">自動クリック</li></button>
+          <button id="granpa"><li class="granpa">おじいちゃん来訪</li></button>
+          <button id=""><li>test</li></button>
+          <button id="clear"><li>出家</li></button>
+        </ul>
+      </div>
     </aside>
-    </div>
+
     <main>
       <div class="container">
         <div class="counterSection">
-        <p>累計金額</p>
-        <div class="counter">
+          <p>累計金額</p>
+          <div class="counter">
             <h1 id="count">0</h1>
             <h2>円</h2>
+          </div>
+          <p>クリック金額：<span>10</span>円</p>
         </div>
-        <p>クリック金額：<span>10</span>円</p>
-        </div>
-
 
         <div class="clickSection">
-          <div>
-            <button id="btn"><img src="img/money.png" alt="" /></button>
-          </div>
+          <button id="btn"><img src="img/money.png" alt="" /></button>
         </div>
       </div>
     </main>
 
     <aside>
-<div class="cardinner">
-          <h1>実績</h1>
-          <div class="card">
-            <a href="#">
+      <div class="cardinner">
+        <h1 class="achiveTitle">実績</h1>
+
+        <div class="nowStatus">
+          <h2>現在</h2>
+          <h3>浮浪者</h3>
+        </div>
+
+        <div class="card">
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-    
-            <a href="#">
+          </a>
+
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-    
-            <a href="#">
+          </a>
+
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-    
-            <a href="#">
+          </a>
+
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-    
-            <a href="#">
+          </a>
+
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-            <a href="#">
+          </a>
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-            <a href="#">
+          </a>
+          <a href="#">
             <div class="cardinfo">
-                  <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-            <a href="#">
+          </a>
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-            <a href="#">
+          </a>
+          <a href="#">
             <div class="cardinfo">
-                <img src="" alt="" />
+              <img src="" alt="" />
             </div>
-            </a>
-          </div>
-</div>
+          </a>
+        </div>
+      </div>
     </aside>
 
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
     <script>
-    let i = 0;
-    let c = 10;
-    let count = document.getElementById("count");
-    let countNow = document.querySelector("span");
-    let nowEvent = document.querySelector(".nowEvent");
+      $(document).ready(function () {
+        let storedCount = localStorage.getItem("count");
+        if (storedCount !== null) {
+          i = parseInt(storedCount);
+          containerH1.text(i);
+        }
+      });
 
-    document.getElementById("btn").addEventListener("click", (e) => {
-    i += c;
-    document.querySelector(".container h1").textContent = i;
-    });
+      let i = 0;
+      let c = 10;
+      let g = 500;
+      let countNow = $("span");
+      let containerH1 = $(".container h1");
 
+      let isAutoClickApplied = false;
 
-    document.getElementById("auto").addEventListener("click", (e) => {
-    i -= 50;
-    document.querySelector(".container h1").textContent = i;
-    const auto = setInterval(()=>{
+      function autoIncrement() {
+        if (!isAutoClickApplied) {
+          i -= 50;
+          containerH1.text(i);
+          const auto = setInterval(function () {
+            i += c;
+            containerH1.text(i);
+          }, 1000);
+          $("#auto li").addClass("completeButton");
+          $("#auto").prop("disabled", true);
+          isAutoClickApplied = true;
+        } else {
+          $("#auto li").addClass("completeButton");
+          $("#auto").prop("disabled", true);
+        }
+      }
+
+      function doubleMoney() {
+        i -= 200;
+        let beforeMoney = c;
+        $("#double li").addClass("completeButton");
+        $("#double").prop("disabled", true);
+        c *= 2;
+        containerH1.text(i);
+        countNow.text(c);
+
+        setTimeout(function () {
+          c -= beforeMoney;
+          countNow.text(c);
+          $("#double").prop("disabled", false);
+          $("#double li").removeClass("completeButton");
+        }, 30000);
+      }
+
+      function granpaAutoIncrement() {
+        i -= g;
+        g *= 2;
+        containerH1.text(i);
+        c += 50;
+        countNow.text(c);
+        isAutoClickApplied = false;
+        const auto = setInterval(function () {
+          i += c;
+          containerH1.text(i);
+        }, 1000);
+      }
+
+      function clearMoney() {
+        var result = confirm("本当にお金を捨てますか？");
+        if (result) {
+          i = 0;
+          containerH1.text(i);
+          alert("出家しました");
+        } else {
+          alert("思いとどまりました");
+        }
+      }
+
+      $("#btn").on("click", function () {
         i += c;
-        document.querySelector(".container h1").textContent = i;
-    },1000);
-    });
-    
+        containerH1.text(i);
+      });
 
-    document.getElementById("double").addEventListener("click", (e) => {
-            i -= 200;
-            c *= 2;
-            document.querySelector(".container h1").textContent = i;
-            countNow.textContent = c;
-            
-            setTimeout(()=>{
-            c = 10;
-            countNow.textContent = c;
-            }, 30000);
-        });
+      $("#auto").on("click", autoIncrement);
 
-    document.getElementById("granpa").addEventListener("click", (e) => {
-        i -= 500;
-        document.querySelector(".container h1").textContent = i;
-        c *= 5;
-        countNow.textContent = c;
-    });
+      $("#double").on("click", doubleMoney);
+
+      $("#granpa").on("click", granpaAutoIncrement);
+
+      $("#clear").on("click", clearMoney);
+
+      $(window).on("beforeunload", function () {
+        localStorage.setItem("count", i);
+      });
     </script>
   </body>
 </html>
