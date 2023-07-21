@@ -9,6 +9,16 @@
       href="https://cdn.jsdelivr.net/npm/destyle.css@1.0.15/destyle.css"
     />
     <link rel="stylesheet" href="style.css" />
+    <style>
+      .granpa::after {
+        position: absolute;
+        content: "2000円";
+        bottom: 25%;
+        right: 15%;
+        font-size: 6px;
+        z-index: 1;
+      }
+    </style>
   </head>
 
   <body>
@@ -20,11 +30,11 @@
         </div>
 
         <ul>
-          <button id="double"><li class="double">30秒クリック2倍</li></button>
-          <button id="auto"><li class="auto">自動クリック</li></button>
-          <button id="granpa"><li class="granpa">おじいちゃん来訪</li></button>
+          <button id="double" class="double"><li>30秒クリック2倍</li></button>
+          <button id="auto" class="auto"><li>自動クリック</li></button>
+          <button id="granpa" class="granpa"><li>おじいちゃん来訪</li></button>
           <button id=""><li>test</li></button>
-          <button id="clear"><li>出家</li></button>
+          <button id="clear" class="clear"><li>出家</li></button>
         </ul>
       </div>
     </aside>
@@ -32,17 +42,20 @@
     <main>
       <div class="container">
         <div class="counterSection">
-          <p>累計金額</p>
+          <p>貯金残高</p>
           <div class="counter">
             <h1 id="count">0</h1>
             <h2>円</h2>
           </div>
-          <p>クリック金額：<span>10</span>円</p>
+          <p>クリック金額：<span id="countSec">10</span>円</p>
         </div>
 
         <div class="clickSection">
           <button id="btn"><img src="img/money.png" alt="" /></button>
+          <img src="img/money.png" alt="" id="animateImage" />
         </div>
+
+        <div id="getting-started"></div>
       </div>
     </main>
 
@@ -110,30 +123,105 @@
     </aside>
 
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.0/dist/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery.countdown/2.2.0/jquery.countdown.min.js"
+      integrity="sha512-lteuRD+aUENrZPTXWFRPTBcDDxIGWe5uu0apPEn+3ZKYDwDaEErIK9rvR0QzUGmUQ55KFE2RqGTVoZsKctGMVw=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    ></script>
     <script>
       $(document).ready(function () {
         let storedCount = localStorage.getItem("count");
         if (storedCount !== null) {
           i = parseInt(storedCount);
           containerH1.text(i);
+          countNow.text(c);
+          countMessage();
+          checkGameOver();
         }
       });
 
+      let isGameOverAlerted = false;
+      function checkGameOver() {
+        if (i < 0 && !isGameOverAlerted) {
+          alert("1分以内に所持金をプラスにしないと人生終了です。");
+          isGameOverAlerted = true;
+
+          setTimeout(function () {
+            if (i < 0) {
+              alert("人生終了！来世で頑張ろう！");
+              e.stopPropagation();
+              i = 0; // 所持金をゼロにリセット
+              containerH1.text(i);
+              countNow.text(c);
+              countMessage();
+            } else {
+              isGameOverAlerted = false;
+            }
+          }, 60000);
+        }
+      }
+
       let i = 0;
       let c = 10;
-      let g = 500;
       let countNow = $("span");
       let containerH1 = $(".container h1");
+      let nowStatus = $(".nowStatus h3");
 
       let isAutoClickApplied = false;
 
+      function countMessage() {
+        if (i > 500000000) {
+          nowStatus.text("夢の中");
+        } else if (i > 100000000) {
+          nowStatus.text("億万長者");
+        } else if (i > 50000000) {
+          nowStatus.text("ポルシェ乗り");
+        } else if (i > 30000000) {
+          nowStatus.text("ベンツ乗り");
+        } else if (i > 15000000) {
+          nowStatus.text("家持ち");
+        } else if (i > 5000000) {
+          nowStatus.text("そこそこ裕福");
+        } else if (i > 3000000) {
+          nowStatus.text("ちょっと裕福");
+        } else if (i > 2000000) {
+          nowStatus.text("中の上");
+        } else if (i > 1000000) {
+          nowStatus.text("大台突破");
+        } else if (i > 500000) {
+          nowStatus.text("大卒社会人5年目");
+        } else if (i > 300000) {
+          nowStatus.text("給料入った");
+        } else if (i > 200000) {
+          nowStatus.text("初任給");
+        } else if (i > 100000) {
+          nowStatus.text("バイトの給料入った");
+        } else if (i > 50000) {
+          nowStatus.text("行方知らずのお年玉");
+        } else if (i > 30000) {
+          nowStatus.text("おかんのへそくり");
+        } else if (i > 10000) {
+          nowStatus.text("ギリいける");
+        } else if (i > 5000) {
+          nowStatus.text("日雇い労働者");
+        } else if (i > 3000) {
+          nowStatus.text("タコ部屋労働者");
+        } else if (i > 1000) {
+          nowStatus.text("空き缶拾い");
+        } else {
+          nowStatus.text("浮浪者");
+        }
+      }
+
       function autoIncrement() {
         if (!isAutoClickApplied) {
-          i -= 50;
+          i -= 500;
           containerH1.text(i);
           const auto = setInterval(function () {
             i += c;
             containerH1.text(i);
+            countMessage();
           }, 1000);
           $("#auto li").addClass("completeButton");
           $("#auto").prop("disabled", true);
@@ -141,17 +229,20 @@
         } else {
           $("#auto li").addClass("completeButton");
           $("#auto").prop("disabled", true);
+          countMessage();
+          checkGameOver();
         }
       }
 
       function doubleMoney() {
-        i -= 200;
+        i -= 500;
         let beforeMoney = c;
         $("#double li").addClass("completeButton");
         $("#double").prop("disabled", true);
         c *= 2;
         containerH1.text(i);
         countNow.text(c);
+        checkGameOver();
 
         setTimeout(function () {
           c -= beforeMoney;
@@ -161,17 +252,30 @@
         }, 30000);
       }
 
+      let g = 2000;
+      let m = 25;
       function granpaAutoIncrement() {
         i -= g;
         g *= 2;
+        var property = window
+          .getComputedStyle($(".granpa li")[0], "::before")
+          .getPropertyValue("content");
+
+        $("head").append(
+          "<style>.granpa:before { content: " + g + '"円" }</style>'
+        );
+        m *= 2;
+
         containerH1.text(i);
-        c += 50;
+        c += m;
         countNow.text(c);
-        isAutoClickApplied = false;
-        const auto = setInterval(function () {
-          i += c;
-          containerH1.text(i);
-        }, 1000);
+        if (!autoIncrement()) {
+          autoIncrement();
+          countMessage();
+        }
+
+        countMessage();
+        checkGameOver();
       }
 
       function clearMoney() {
@@ -179,6 +283,7 @@
         if (result) {
           i = 0;
           containerH1.text(i);
+          countMessage();
           alert("出家しました");
         } else {
           alert("思いとどまりました");
@@ -187,7 +292,22 @@
 
       $("#btn").on("click", function () {
         i += c;
+        $;
         containerH1.text(i);
+        $("#animateImage").animate(
+          [
+            {
+              zIndex: 1,
+              marginTop: "500px",
+            },
+            {
+              marginLeft: "1000px",
+              backgroundColor: "#ff0",
+            },
+          ],
+          2000
+        );
+        countMessage();
       });
 
       $("#auto").on("click", autoIncrement);
@@ -200,6 +320,7 @@
 
       $(window).on("beforeunload", function () {
         localStorage.setItem("count", i);
+        localStorage.setItem("span", c);
       });
     </script>
   </body>

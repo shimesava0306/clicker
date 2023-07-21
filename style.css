@@ -17,6 +17,10 @@ aside {
   text-align: center;
   border-right: 3px #c4e2ff solid;
 }
+
+.menuTitle h1 {
+  margin-top: 2rem;
+}
 main {
   width: 70%;
   text-align: center;
@@ -45,30 +49,77 @@ li {
   margin-right: 2rem;
   box-shadow: 2px 2px 2px #777777;
 }
+.double,
+.auto,
+.granpa,
+.clear {
+  position: relative;
+}
 
-#double:after {
+.double:before {
   content: "";
   background-image: url("img/double.png");
   background-size: contain;
   background-repeat: no-repeat;
+  position: absolute;
+  top: 30%;
+  left: 5%;
   height: 32px;
   width: 32px;
+  z-index: 1;
 }
-#auto:after {
+.double:after {
+  position: absolute;
+  content: "500円";
+  bottom: 25%;
+  right: 15%;
+  font-size: 6px;
+  z-index: 1;
+}
+#auto:before {
   content: "";
-  background-image: url("img/click.png");
+  background-image: url("img/auto.png");
   background-size: contain;
   background-repeat: no-repeat;
+  position: absolute;
+  top: 30%;
+  left: 5%;
   height: 32px;
   width: 32px;
+  z-index: 1;
 }
-#granpa:before {
+.auto:after {
+  position: absolute;
+  content: "500円";
+  bottom: 25%;
+  right: 15%;
+  font-size: 6px;
+  z-index: 1;
+}
+.granpa:before {
   content: "";
   background-image: url("img/granpa.png");
   background-size: contain;
   background-repeat: no-repeat;
+  position: absolute;
+  top: 30%;
+  left: 5%;
   height: 32px;
   width: 32px;
+  z-index: 1;
+}
+
+.clear:before {
+  content: "";
+  background-image: url("img/temple.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 30%;
+  left: 5%;
+  height: 32px;
+  width: 32px;
+  z-index: 1;
 }
 
 h1 {
@@ -86,7 +137,7 @@ h1 {
 }
 
 .nowStatus h3 {
-  font-size: 3rem;
+  font-size: 1.75rem;
   color: brown;
 }
 
@@ -117,4 +168,18 @@ p {
 .completeButton {
   background-color: #777777;
   box-shadow: 2px 2px 2px #33333333;
+}
+
+.clickSection #button {
+  position: relative;
+  z-index: 1;
+}
+
+.clickSection #animateImage {
+  width: 10%;
+  height: 20%;
+  position: absolute;
+  top: 30%;
+  left: 45%;
+  z-index: -1;
 }
